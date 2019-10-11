@@ -1,0 +1,27 @@
+{
+  "Migration": [
+    "file",
+    "done"
+  ],
+  "User": [
+    "auth",
+    "info",
+    "roles"
+  ],
+  "Video": [
+    "link",
+    "title",
+    "description",
+    "duration",
+    "tags",
+    "views",
+    "likes",
+    "favorites",
+    "comments",
+    "thumbnail",
+    "channel",
+    "hosting",
+    "download_status",
+    "downloaded_url"
+  ]
+}
