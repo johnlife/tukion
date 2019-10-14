@@ -7,9 +7,14 @@
             </div>
         </template>
         <template v-else>
+            <vue-plyr v-if="player && video.download_status === 'downloaded'">
+                <video :poster="video.thumbnail" :src="video.downloaded_url"></video>
+            </vue-plyr>
             <v-img
+                v-else
                 :src="video.thumbnail"
                 aspect-ratio="1.75"
+                @click="player = true"
             ></v-img>
             <v-card-title primary-title>
                 <div class="w100">
@@ -121,6 +126,7 @@
                 active: false,
                 text: '',
             },
+            player: false,
         }),
         props: {
             video: {required: true},

@@ -4,6 +4,7 @@ import VueRouter from 'vue-router';
 import Meta from 'vue-meta';
 import axios from "axios"
 import hostingsConfig from '../../config/hostings';
+import VuePlyr from 'vue-plyr';
 
 Vue.use(Vuetify, {
     options: {
@@ -12,6 +13,7 @@ Vue.use(Vuetify, {
 });
 Vue.use(VueRouter);
 Vue.use(Meta);
+Vue.use(VuePlyr);
 
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 Vue.prototype.$http = axios;
