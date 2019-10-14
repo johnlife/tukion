@@ -1,1 +1,50 @@
-{}
+{
+  "addList": {
+    "name": "addList",
+    "method": "post",
+    "url": "/api/list/",
+    "params": []
+  },
+  "editList": {
+    "name": "editList",
+    "method": "post",
+    "url": "/api/list/:list_id",
+    "params": [
+      "list_id"
+    ]
+  },
+  "deleteList": {
+    "name": "deleteList",
+    "method": "delete",
+    "url": "/api/list/:list_id",
+    "params": [
+      "list_id"
+    ]
+  },
+  "addListVideo": {
+    "name": "addListVideo",
+    "method": "post",
+    "url": "/api/list/:list_id/video/",
+    "params": [
+      "list_id"
+    ]
+  },
+  "editListVideo": {
+    "name": "editListVideo",
+    "method": "post",
+    "url": "/api/list/:list_id/video/:video_id",
+    "params": [
+      "list_id",
+      "video_id"
+    ]
+  },
+  "deleteListVideo": {
+    "name": "deleteListVideo",
+    "method": "delete",
+    "url": "/api/list/:list_id/video/:video_id",
+    "params": [
+      "list_id",
+      "video_id"
+    ]
+  }
+}

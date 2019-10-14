@@ -24,7 +24,7 @@ export default {
             commit('setVideos', data);
             const incomplete = data.find(video => video.download_status !== statuses.downloaded);
             if (scheduledUpdate) clearTimeout(scheduledUpdate);
-            scheduledUpdate = setTimeout(() => dispatch('retrieveBackendData'), incomplete ? 1000 : 5000);
+            scheduledUpdate = setTimeout(() => dispatch('retrieveBackendData'), incomplete ? 1000 : 60000);
         },
         downloadVideo: async ({commit, dispatch}, link) => {
             const { data } = await axios.post('/api/data/video', {link});

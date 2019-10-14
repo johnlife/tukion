@@ -1,5 +1,5 @@
 <template>
-    <v-card class="mb-3" @mouseover="hovered = true" @mouseout="hovered = false">
+    <v-card class="mb-3">
         <template v-if="video.download_status === 'pending'">
             <div class="pa-5">
                 <h3 class="headline restricted video-title mb-3 font-weight-light">{{video.link}}</h3>
@@ -34,7 +34,10 @@
                         <v-flex class="restricted video-tags">{{ video.tags.join(', ') }}</v-flex>
                         <v-flex xs3 class="text-xs-right">{{ video.duration }}</v-flex>
                     </v-layout>
-
+                </div>
+            </v-card-title>
+            <v-card-text>
+                <div class="w100">
                     <template v-if="editing">
                         <v-text-field
                             label="Description"
@@ -49,31 +52,61 @@
                         <v-flex v-for="i in icons" :key="i.field"><v-icon small>{{ i.icon}}</v-icon> {{ video[i.field] }}</v-flex>
                     </v-layout>
                 </div>
+            </v-card-text>
+            <v-card-actions>
+                <v-menu offset-y>
+                    <template slot="activator">
+                        <v-btn
+                            color="primary"
+                            flat="flat"
+                            >
+                            Add to List
+                        </v-btn>
+                    </template>
+                    <v-list>
+                        <v-list-tile
+                            v-for="list in filteredLists"
+                            :key="list._id"
+                            @click="() => assignTo(list)"
+                        >
+                            <v-list-tile-title>{{ list.title }}</v-list-tile-title>
+                        </v-list-tile>
+                    </v-list>
+                </v-menu>
+                <v-snackbar
+                    v-model="confirmation.active"
+                    bottom right
+                    :timeout="3000"
+                >
+                    {{ confirmation.text }}
+                </v-snackbar>
+
+                <v-spacer></v-spacer>
+
                 <v-btn
-                    v-show="hovered && !editing"
-                    color="primary"
-                    dark small fab
-                    absolute bottom right
+                    v-show="!editing"
+                    color="secondary"
+                    flat icon
                     @click="edit()"
                     >
                     <v-icon>edit</v-icon>
                 </v-btn>
                 <v-btn
                     v-show="editing"
-                    color="primary"
-                    dark small fab
-                    absolute bottom right
+                    color="secondary"
+                    flat icon
                     @click="submit()"
                     >
                     <v-icon>check</v-icon>
                 </v-btn>
-            </v-card-title>
+            </v-card-actions>
         </template>
     </v-card>
 </template>
 
 <script>
     import _ from 'lodash';
+    import { mapState } from 'vuex';
     export default {
         data: () => ({
             icons: [
@@ -82,14 +115,30 @@
                 {icon: 'favorite_border', field: 'favorites'},
                 {icon: 'chat_bubble_outline', field: 'comments'},
             ],
-            hovered: false,
             editing: false,
             edits: {},
+            confirmation: {
+                active: false,
+                text: '',
+            },
         }),
         props: {
             video: {required: true},
         },
         computed: {
+            ...mapState({
+                lists: state => state.lists.lists,
+            }),
+            filteredLists() {
+                const v_id = this.video._id;
+                const current = this.$store.state.lists.current._id;
+                return this.lists
+                    .filter(ls =>
+                        ls._id !== -1 &&                                  //not "all video"
+                        ls._id !==  current &&                            //not current list
+                        !(ls.videos || []).map(v => v._id).includes(v_id) //target list doesn't contain this video
+                    )
+                }
         },
         methods: {
             edit() {
@@ -101,6 +150,12 @@
                 this.$store.dispatch("editVideo", this.edits);
                 this.edits = {};
             },
+            assignTo(list) {
+                const video = this.video;
+                this.$store.dispatch("addVideoToList", {list, video});
+                this.confirmation.text = `Video ${video.title} was added to ${list.title}`;
+                this.confirmation.active = true;
+            }
         },
     }
 </script>

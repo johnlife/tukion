@@ -8,6 +8,10 @@
     "info",
     "roles"
   ],
+  "List": [
+    "title",
+    "videos"
+  ],
   "Video": [
     "link",
     "title",

@@ -17,6 +17,14 @@ module.exports = {
             return models.Video.find().lean().exec();
         },
     },
+    getLists: {
+        url: '/data/lists',
+        handler() {
+            return models.List.find()
+                .populate('videos')
+                .lean().exec();
+        },
+    },
     addVideo: {
         url: '/data/video',
         method: 'post',
