@@ -25,7 +25,7 @@
     "lifeNode": "https://gitlab.com/yan.yurkin/node.git",
     "lodash": "^4",
     "mime": "^1",
-    "mongoose": "^5.5.14",
+    "mongoose": "^5.7.5",
     "mustache-express": "^1",
     "pure-uuid": "^1.5.7",
     "vimeo-downloader": "^1.0.4",
