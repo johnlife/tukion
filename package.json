@@ -21,7 +21,7 @@
     "connect-mongo": "^2",
     "cookie-parser": "^1",
     "cross-env": "^5",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "lifeNode": "https://gitlab.com/yan.yurkin/node.git",
     "lodash": "^4",
     "mime": "^1",
